@@ -21,10 +21,7 @@ export default async function DashboardPage() {
   // 管理者権限をチェック
   const { isAdmin } = await checkAdminAccess()
 
-  // 管理者の場合は管理者ダッシュボードにリダイレクト
-  if (isAdmin) {
-    redirect("/admin")
-  }
+  // 管理者の場合でもユーザー画面を表示できるようにする（リダイレクトしない）
 
   // ユーザープロファイルを取得
   const { data: profile } = await supabase.from("profiles").select("*").eq("id", data.user.id).single()

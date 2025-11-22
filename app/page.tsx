@@ -65,7 +65,7 @@ export default function HomePage() {
               <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
                 自由な移動を、
                 <br />
-                <span className="text-primary">定額</span>で手に入れる
+                <span className="text-red-600">定額</span>で手に入れる
               </h1>
               <p className="text-xl text-gray-200 max-w-lg leading-relaxed">
                 所有から利用へ。CarSubscは、あなたのライフスタイルに合わせた
