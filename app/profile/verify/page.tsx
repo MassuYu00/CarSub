@@ -23,14 +23,20 @@ export default function VerifyIdentityPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!frontImageUrl || !backImageUrl) return
+        console.log("handleSubmit called")
+        if (!frontImageUrl || !backImageUrl) {
+            console.log("Missing images:", { frontImageUrl, backImageUrl })
+            return
+        }
 
         setLoading(true)
+        console.log("Starting submission...")
 
         try {
             const {
                 data: { user },
             } = await supabase.auth.getUser()
+            console.log("User fetched:", user)
 
             if (!user) throw new Error("User not found")
 
@@ -43,8 +49,12 @@ export default function VerifyIdentityPage() {
                 })
                 .eq("id", user.id)
 
-            if (error) throw error
+            if (error) {
+                console.error("Supabase update error:", error)
+                throw error
+            }
 
+            console.log("Submission successful")
             setSubmitted(true)
         } catch (error) {
             console.error("提出に失敗しました:", error)

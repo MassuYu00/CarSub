@@ -60,7 +60,7 @@ export default async function ProfilePage() {
 
   const getStatusLabel = (status: string) => {
     const statuses: Record<string, string> = {
-      pending: "確認待ち",
+      pending: "審査中",
       confirmed: "確定",
       active: "利用中",
       completed: "完了",
@@ -162,7 +162,7 @@ export default async function ProfilePage() {
                           }
                         >
                           {profile?.verification_status === 'verified' ? '確認済み' :
-                            profile?.verification_status === 'pending' ? '確認中' :
+                            profile?.verification_status === 'pending' ? '審査中' :
                               profile?.verification_status === 'rejected' ? '却下' : '未提出'}
                         </Badge>
                       </div>
