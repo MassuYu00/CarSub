@@ -16,6 +16,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [fullName, setFullName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -40,6 +42,8 @@ export default function SignupPage() {
           emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
           data: {
             full_name: btoa(encodeURIComponent(fullName)),
+            phone: phone,
+            address: address,
           },
         },
       })
@@ -73,6 +77,28 @@ export default function SignupPage() {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="phone">電話番号</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="090-1234-5678"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="address">住所</Label>
+                    <Input
+                      id="address"
+                      type="text"
+                      placeholder="東京都渋谷区〇〇1-2-3"
+                      required
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
                     />
                   </div>
                   <div className="grid gap-2">

@@ -237,7 +237,7 @@ export default async function AdminUserDetailPage({ params }: { params: { id: st
                                             }}
                                             className="flex-1"
                                         >
-                                            <Button className="w-full bg-green-600 hover:bg-green-700">承認する</Button>
+                                            <Button className="w-full bg-green-600 hover:bg-green-700 text-white">承認する</Button>
                                         </form>
                                         <form
                                             action={async () => {

@@ -134,8 +134,18 @@ export default async function AdminUsersPage() {
                           rel="noopener noreferrer"
                           className="text-sm text-blue-600 hover:underline block"
                         >
-                          免許証画像を確認
+                          免許証画像（表面）を確認
                         </a>
+                        {userProfile.driver_license_back_image_url && (
+                          <a
+                            href={userProfile.driver_license_back_image_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-600 hover:underline block"
+                          >
+                            免許証画像（裏面）を確認
+                          </a>
+                        )}
                         {userProfile.verification_status === "pending" && (
                           <div className="flex gap-2">
                             <form
@@ -149,7 +159,7 @@ export default async function AdminUsersPage() {
                                 redirect("/admin/users")
                               }}
                             >
-                              <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700">
+                              <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700 text-white">
                                 承認
                               </Button>
                             </form>
@@ -164,7 +174,7 @@ export default async function AdminUsersPage() {
                                 redirect("/admin/users")
                               }}
                             >
-                              <Button size="sm" variant="destructive">
+                              <Button size="sm" variant="destructive" className="text-white">
                                 却下
                               </Button>
                             </form>
@@ -183,9 +193,6 @@ export default async function AdminUsersPage() {
                       詳細を見る
                     </Button>
                   </Link>
-                  <Button variant="outline" size="sm">
-                    編集
-                  </Button>
                 </div>
               </CardContent>
             </Card>
