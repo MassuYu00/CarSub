@@ -22,25 +22,20 @@ export default async function AdminUsersPage() {
   }
 
   // ユーザー一覧を取得
-  const { data: users, error } = await supabase
+  const { data: allUsers, error } = await supabase
     .from("profiles")
-    .select(
-      `
-      *,
-      user_subscriptions (
-        status,
-        subscription_plans (
-          name,
-          monthly_price
-        )
-      )
-    `,
-    )
+    .select("*")
     .order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching users:", error)
   }
+
+  // 管理者を除外
+  const users = allUsers?.filter(user => user.is_admin !== true) || []
+
+  console.log("Fetched all users count:", allUsers?.length)
+  console.log("Non-admin users count:", users?.length)
 
   return (
     <div className="container mx-auto py-10 space-y-8">

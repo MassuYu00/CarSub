@@ -30,7 +30,24 @@ export default function LoginPage() {
         password,
       })
       if (error) throw error
-      router.push("/dashboard")
+
+      // 管理者かどうかをチェック
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("is_admin")
+          .eq("id", user.id)
+          .single()
+
+        if (profile?.is_admin) {
+          router.push("/admin")
+        } else {
+          router.push("/dashboard")
+        }
+      } else {
+        router.push("/dashboard")
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "ログインに失敗しました")
     } finally {
