@@ -1,4 +1,4 @@
-import { put } from "@vercel/blob"
+import { createClient } from "@/lib/supabase/server"
 import { type NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
@@ -20,17 +20,42 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "ファイルサイズは5MB以下にしてください" }, { status: 400 })
     }
 
+    const supabase = await createClient()
+
+    // 認証チェック
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ error: "認証が必要です" }, { status: 401 })
+    }
+
     // ユニークなファイル名を生成
     const timestamp = Date.now()
-    const fileName = `vehicles/${timestamp}-${file.name}`
+    // ファイル名から日本語などを除外して安全にする
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_")
+    const fileName = `${user.id}/${timestamp}-${safeName}`
 
-    // Vercel Blobにアップロード
-    const blob = await put(fileName, file, {
-      access: "public",
+    // Supabase Storageにアップロード
+    const { data, error } = await supabase.storage.from("vehicles").upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
     })
 
+    if (error) {
+      console.error("Supabase Storage upload error:", error)
+      return NextResponse.json({ error: "アップロードに失敗しました" }, { status: 500 })
+    }
+
+    // 公開URLを取得
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("vehicles").getPublicUrl(fileName)
+
     return NextResponse.json({
-      url: blob.url,
+      url: publicUrl,
       filename: file.name,
       size: file.size,
       type: file.type,

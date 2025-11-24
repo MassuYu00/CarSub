@@ -62,16 +62,7 @@ export function AdminSidebar() {
                     ))}
                 </nav>
             </div>
-            <div className="mt-auto border-t border-slate-800 p-4">
-                <div className="flex flex-col gap-2">
-                    <Link href="/dashboard">
-                        <Button variant="ghost" className="w-full justify-start text-slate-400 hover:bg-slate-800 hover:text-white">
-                            <LogOut className="mr-2 h-4 w-4" />
-                            ユーザー画面に戻る
-                        </Button>
-                    </Link>
-                </div>
-            </div>
+
         </div>
     )
 }

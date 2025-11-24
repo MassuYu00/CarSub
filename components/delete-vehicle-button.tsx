@@ -63,7 +63,7 @@ export function DeleteVehicleButton({ vehicleId, vehicleName }: DeleteVehicleBut
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="sm" disabled={loading}>
+        <Button variant="destructive" size="sm" className="text-white" disabled={loading}>
           <Trash2 className="h-4 w-4 mr-1" />
           削除
         </Button>

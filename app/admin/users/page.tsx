@@ -27,7 +27,7 @@ export default async function AdminUsersPage() {
     .select(
       `
       *,
-      user_subscriptions!inner (
+      user_subscriptions (
         status,
         subscription_plans (
           name,

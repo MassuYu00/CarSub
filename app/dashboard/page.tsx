@@ -82,7 +82,15 @@ export default async function DashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">ダッシュボード</h1>
-            <p className="text-muted-foreground">ようこそ、{profile?.full_name ? decodeURIComponent(atob(profile.full_name)) : data.user.email}さん</p>
+            <p className="text-muted-foreground">
+              ようこそ、
+              {profile?.full_name
+                ? decodeURIComponent(atob(profile.full_name))
+                : data.user.user_metadata?.full_name
+                  ? decodeURIComponent(atob(data.user.user_metadata.full_name))
+                  : data.user.email}
+              さん
+            </p>
           </div>
           <div className="flex gap-2">
             {isAdmin && (
